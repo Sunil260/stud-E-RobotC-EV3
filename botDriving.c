@@ -193,7 +193,7 @@ void testMode()
 	float grade=float(score)/questionNum;
 	displayString (5, “You scored %d/%d, score, questionNum);
 		displayString( (6, “%f”, grade)
-		if (grade<80) 
+		if (grade<60) 
 		{
 			fireBullet(); // need to create this function
 		}
