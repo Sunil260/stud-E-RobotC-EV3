@@ -128,15 +128,14 @@ void fireBullet()
 
 float timer() 
 {
-	displayString (5,"Press Up to Begin the Timer");
-	displayString (7,"Press Up Again to Stop the Timer");
+	displayString (5,"Press up to begin the timer");
+	displayString (7,"Press up again to stop it");
 	while(!getButtonPress(UP_BUTTON)) 
 	{
 	}
     while(getButtonPress(UP_BUTTON)) 
 	{
 	}
-	eraseDisplay();
 	time1[T1]=0;
 	while(!getButtonPress(UP_BUTTON)) 
 	{
@@ -144,7 +143,9 @@ float timer()
     while(getButtonPress(UP_BUTTON)) 
 	{
 	}
-	displayString (5, "Your time is %f", time1[T1]/1000.0);
+	eraseDisplay();
+	displayString (5, "Your time is %f minutes", time1[T1]/1000.0/60);
+	wait1Msec(5000);
 }
 
 // test mode function
