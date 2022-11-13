@@ -99,24 +99,28 @@ void studyMode (int tapeColour, int turnColour, int &lapCount)
 	lapCount++;
 	for (int count=0; count<4; count++) 
 	{
-		drivePower(10);
-		while (SensorValue[]==tapeColour) 
+		drivePower(5);
+		if (SensorValue[touchPort]==0) 
 		{
-			if (SensorValue[touchPort]==0) 
-			{
-				driveStop();
-				dispense();
-				lapCount=0;
-			}
-			drivePower(20);
+			driveStop();
+			dispense();
+			lapCount=0;
 		}
-		while (!(sensorValue[]==tapeColour||sensorValue[]==turnColour)) {
-			motor[motorA]=motor[motorD]=0;
+		drivePower(20);
+		while(SensorValue[S1] == tapeColour && SensorValue[S1] != turnColour)
+		{
 			playSoundFile("fixSound.rsf");
 		}
 		driveStop();
-		driveDist(howeverlong, 20);
-		turnCW(90,20);
+		wait1Msec(1000);
+		driveStop(); 
+		turnCW(90,5);
+		nMotorEncoder[motorA] = 0; 
+		drivePower(5); 
+		while(nMotorEncoder[motorA] < CORNER_DIST_CORRECTION)
+		{
+		}
+		driveStop();
 	}
 	return;
 }
