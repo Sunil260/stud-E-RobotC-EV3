@@ -187,7 +187,7 @@ return;
 }
 
 
-// main function .....sbosndvosdn
+// main function .....
 #include “PC_FileIO.c”
 
 task main ()
