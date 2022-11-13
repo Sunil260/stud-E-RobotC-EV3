@@ -101,26 +101,13 @@ void dispense () {
 return;
 }
 
-// follow a line function
-void followLine (int tapeColour) {
-	} 
-
- 
-void lineLoop() {
-	for (int count=1; count<=4; count++) 
-	{
-		followLine(int(colorRed));
-	}
-	return;
-}
-
 // study mode
-void studyMode (int tapeColour, int &lapCount) 
+void studyMode (int tapeColour, int turnColour, int &lapCount) 
 {
 	lapCount++;
 	for (int count=0; count<4; count++) 
 	{
-		drivePower(20);
+		drivePower(10);
 		while (SensorValue[]==tapeColour) 
 		{
 			if (SensorValue[touchPort]==0) 
@@ -130,6 +117,10 @@ void studyMode (int tapeColour, int &lapCount)
 				lapCount=0;
 			}
 			drivePower(20);
+		}
+		while (!(sensorValue[]==tapeColour||sensorValue[]==turnColour)) {
+			motor[motorA]=motor[motorD]=0;
+			playSoundFile("fixSound.rsf");
 		}
 		driveStop();
 		driveDist(howeverlong, 20);
