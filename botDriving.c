@@ -90,15 +90,7 @@ int modeChoose() {
 
 // dispense function someone make the menu
 void dispense () {
-	displayString(5, “SKITTLE MENU”);
-	displayString(8, “Press down to scroll.”);
-	displayString(9, “Press enter to scroll.”);
-	int selection=0;
-	while (!(selection==1||selection==2||selection==3||selection==4)) 
-	{
-	}
-	eraseDisplay();
-return;
+	
 }
 
 // study mode
@@ -134,10 +126,8 @@ void fireBullet()
 
 }
 
-// test mode function
-void testMode() 
-{ 
-// timer
+float timer() 
+{
 	displayString (5,"Press Up to Begin the Timer");
 	displayString (7,"Press Up Again to Stop the Timer");
 	while(!getButtonPress(UP_BUTTON)) 
@@ -155,6 +145,13 @@ void testMode()
 	{
 	}
 	displayString (5, "Your time is %f", time1[T1]/1000.0);
+}
+
+// test mode function
+void testMode() 
+{ 
+// timer
+timer();
 
 // file for answers
 	TFileHandle fileIn;
@@ -169,25 +166,22 @@ void testMode()
 		int questionNum=0;
 		int score = 0;
 		readCharPC (fileIn,questionNum);
-		for (int line=0; line<questionNum; line++) 
+		// putting answers into an array
+		char answers[questionNum]={};
+		int j=0
+		while (readCharPC (fileIn,answer[j]))
 		{
-			char answer = ’ ’;
-			readCharPC (fileIn,answer);
-			// insert how to DRIVE and SCAN
-			// need to declare variable input somewhere
-			if (input==answer) 
+			j++
+		}
+		//drive and scan
+		driveStop();
+		float grade=float(score)/questionNum;
+		displayString (5, “You scored %d/%d, score, questionNum);
+			displayString( (6, “%f”, grade)
+			if (grade<60) 
 			{
-				score++;
+				fireBullet(); // need to create this function
 			}
-		}
-	driveStop();
-	float grade=float(score)/questionNum;
-	displayString (5, “You scored %d/%d, score, questionNum);
-		displayString( (6, “%f”, grade)
-		if (grade<60) 
-		{
-			fireBullet(); // need to create this function
-		}
 	}
 return;
 }
