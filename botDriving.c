@@ -88,7 +88,7 @@ int modeChoose() {
 	return mode;
 }
 
-//resets the varables for the skittle menu
+//resets the variables for the skittle menu
 void reset_char(string & var1, string & var2, string & var3, string & var4, string & var5)
 {
 	var1 = ">";
@@ -117,7 +117,7 @@ void change_select(int & choice, string & Yellow_char, string & Red_char, string
   	reset_char(Orange_char, Yellow_char,Red_char,Green_char,Purple_char);
 } 
 //menu for selecting the skittles
-int skittle_select(){
+int skittleSelect(){
 	int choice = 0; 
 	string Yellow_char = " ";
 	string Red_char= " ";
@@ -158,13 +158,13 @@ void open_flap(int time_open)
 	
 }
 
-void displence()
+void dispense()
 {
 	const TIME_OPEN_FLAP_M = 2000;
-	bool dispencing = true;
-	while(dispencing == true)
+	bool dispensing = true;
+	while(dispensing == true)
 	{
-		int skittle_selected = skittle_select();
+		int skittle_selected = skittleSelect();
 		int rotate = -1*skittle_selected*60;
 		nMotorEncoder(motorA) = 0;
 		motor[motorA]= -15;
@@ -243,7 +243,7 @@ float timer()
 void testMode() 
 { 
 // timer
-timer();
+	timer();
 
 // file for answers
 	TFileHandle fileIn;
