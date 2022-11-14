@@ -88,10 +88,97 @@ int modeChoose() {
 	return mode;
 }
 
-// dispense function someone make the menu
-void dispense () {
+//resets the varables for the skittle menu
+void reset_char(string & var1, string & var2, string & var3, string & var4, string & var5)
+{
+	var1 = ">";
+	var2 = " ";
+	var3 = " ";
+	var4 = " ";
+	var5 = " ";
+}
+//changes the selected menu option for skittles
+void change_select(int & choice, string & Yellow_char, string & Red_char, string & Green_char,string & Purple_char,string & Orange_char)
+{
+	if(choice < 0)
+		choice = 4;
+	if(choice > 4)
+		choice = 0;
+
+	if(choice == 0)
+		reset_char(Yellow_char, Red_char, Green_char, Purple_char, Orange_char);
+	else if (choice == 1)
+		reset_char(Red_char, Green_char, Purple_char, Orange_char, Yellow_char);
+	else if (choice == 2)
+		reset_char(Green_char, Purple_char, Orange_char, Yellow_char,Red_char);
+  else if (choice == 3)
+  	reset_char(Purple_char, Orange_char, Yellow_char,Red_char,Green_char);
+	else if (choice == 4)
+  	reset_char(Orange_char, Yellow_char,Red_char,Green_char,Purple_char);
+} 
+//menu for selecting the skittles
+int skittle_select(){
+	int choice = 0; 
+	string Yellow_char = " ";
+	string Red_char= " ";
+	string Green_char = " ";
+	string Purple_char = " " ;
+	string Orange_char = " ";
+	while(!getButtonPress(ENTER_BUTTON))
+	{
+		if (getButtonPress(DOWN_BUTTON))
+		{
+			choice++;
+			while(getButtonPress(DOWN_BUTTON))
+		  {}
+		}
+		
+		if(getButtonPress(UP_BUTTON))
+	  {
+	  	choice--;
+	  	while(getButtonPress(UP_BUTTON))
+	  	{}
+	  }
+	  change_select(choice, Yellow_char, Red_char, Green_char, Purple_char, Orange_char);
+		displayString(4,"%s Yellow Skittle", Yellow_char);
+		displayString(5,"%s Red Skittle", Red_char);
+		displayString(6,"%s Green Skittle", Green_char);
+		displayString(7,"%s Purple Skittle", Purple_char);
+		displayString(8,"%s Orange Skittle", Orange_char);
+		displayString(9,"%d",choice);
+		
+  }
+  return choice;
+		
+}
+
+void open_flap(int time_open)
+{
+	time1[T1] = 0;
 	
 }
+
+void displence()
+{
+	const TIME_OPEN_FLAP_M = 2000;
+	bool dispencing = true;
+	while(dispencing == true)
+	{
+		int skittle_selected = skittle_select();
+		int rotate = -1*skittle_selected*60;
+		nMotorEncoder(motorA) = 0;
+		motor[motorA]= -15;
+		while(nMotorEncoder(motorA) >  rotate)
+	  {}
+		motor[motorA]=0;
+		open_flap(TIME_OPEN_FLAP_M);
+		motor[motorA]= 15;
+		while(nMotorEncoder(motorA) <0)
+	  {}
+		motor[motorA]=0;
+	}
+}
+
 
 // study mode
 void studyMode (int tapeColour, int turnColour, int &lapCount) 
