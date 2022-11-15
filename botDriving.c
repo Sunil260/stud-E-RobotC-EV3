@@ -88,7 +88,7 @@ int modeChoose() {
 	return mode;
 }
 
-//resets the varables for the skittle menu
+//resets the variables for the skittle menu
 void reset_char(string & var1, string & var2, string & var3, string & var4, string & var5)
 {
 	var1 = ">";
@@ -117,7 +117,7 @@ void change_select(int & choice, string & Yellow_char, string & Red_char, string
   	reset_char(Orange_char, Yellow_char,Red_char,Green_char,Purple_char);
 } 
 //menu for selecting the skittles
-int skittle_select(){
+int skittleSelect(){
 	int choice = 0; 
 	string Yellow_char = " ";
 	string Red_char= " ";
@@ -186,10 +186,11 @@ void dispense()
 {
 		const int TIME_OPEN_FLAP_M = 2000;
 	int degree_deviation = -2;
+	const TIME_OPEN_FLAP_M = 2000;
 	bool dispensing = true;
 	while(dispensing == true)
 	{
-		int skittle_selected = skittle_select();
+		int skittle_selected = skittleSelect();
 		int rotate = -1*skittle_selected*60;
 		nMotorEncoder(motorC) = 0;
 		motor[motorC]= -15;
@@ -270,7 +271,7 @@ float timer()
 void testMode() 
 { 
 // timer
-timer();
+	timer();
 
 // file for answers
 	TFileHandle fileIn;
@@ -336,19 +337,7 @@ task main ()
 		while (mode==2) 
 		{
 			testMode();
-			time1[T2]=0;
-			if ((time1[T2]/1000.)>120) 
-			{
-				done=0;
-			}
-			
-		}
-
-		// press enter button to go back to the menu this defo doesnt work like i want it so that at any point if u ress it it goes back to the 
-		// main menu!  wowza gfbaiybfia
-		if (getButtonPress==ENTER_BUTTON) 
-		{
-			modeInterface=true;
+			done=0;
 		}
 	}
 	return;
