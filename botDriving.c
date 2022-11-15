@@ -154,28 +154,55 @@ int skittle_select(){
 
 void open_flap(int time_open)
 {
-	time1[T1] = 0;
+		nMotorEncoder(motorB) = 0;
+	motor[motorB] = -100;
+	while (nMotorEncoder(motorB) > -1500)
+	{}
+	motor[motorB] = 0;
+	time1[T1]=0;
+	int shake_degree = nMotorEncoder(motorC);
+	while(time1[T1] <=time_open)
+  {
+
+  	motor[motorC] = 25;
+  	while (nMotorEncoder(motorC) < (shake_degree +10) && time1[T1] <=time_open)
+		{}
+		motor[motorC]= -25;
+		while (nMotorEncoder(motorC) > (shake_degree-10) && time1[T1] <=time_open)
+		{}
+  }
+  motor[motorC]= -15;
+	while (nMotorEncoder(motorC) > (shake_degree-10) && time1[T1] <=time_open)
+	{}
+  motor[motorC]=0;
+	motor[motorB] = 100;
+	while (nMotorEncoder(motorB) < 0)
+	{}
+	motor[motorB] = 0;
 	
 }
 
-void displence()
+void dispense()
 {
-	const TIME_OPEN_FLAP_M = 2000;
-	bool dispencing = true;
-	while(dispencing == true)
+		const int TIME_OPEN_FLAP_M = 2000;
+	int degree_deviation = -2;
+	bool dispensing = true;
+	while(dispensing == true)
 	{
 		int skittle_selected = skittle_select();
 		int rotate = -1*skittle_selected*60;
-		nMotorEncoder(motorA) = 0;
-		motor[motorA]= -15;
-		while(nMotorEncoder(motorA) >  rotate)
+		nMotorEncoder(motorC) = 0;
+		motor[motorC]= -15;
+		while(nMotorEncoder(motorC) >  rotate)
 	  {}
-		motor[motorA]=0;
+		motor[motorC]=0;
 		open_flap(TIME_OPEN_FLAP_M);
-		motor[motorA]= 15;
-		while(nMotorEncoder(motorA) <0)
+		motor[motorC]= 15;
+		while(nMotorEncoder(motorC) <(0 + degree_deviation))
 	  {}
-		motor[motorA]=0;
+		motor[motorC]=0;
+		
+	}
 	}
 }
 
