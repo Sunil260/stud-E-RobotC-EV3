@@ -275,12 +275,17 @@ float timer()
 // test mode function
 void testMode() 
 { 
-// timer
+	// timer
 	timer();
 
-// file for answers
+	// file for answers
 	TFileHandle fileIn;
 	bool fileCondition = openReadPC(fileIn, “answers.txt”);
+
+	//Array for collected answer
+	string inputAns [10] = {""};
+
+	//Checks if file can open 
 	if (!fileCondition) 
 	{
 		displayString(5,”Error!”);
@@ -288,26 +293,52 @@ void testMode()
 	}
 	else 
 	{
-		int questionNum=0;
+		int questionNum=10;
 		int score = 0;
-		readCharPC (fileIn,questionNum);
+		//readCharPC (fileIn,questionNum);
 		// putting answers into an array
-		char answers[questionNum]={};
+		char answers[questionNum]={''};
 		int j=0
-		while (readCharPC (fileIn,answer[j]))
+		while (readCharPC (fileIn,answers[j]))
 		{
 			j++
 		}
 
 		//drive and scan
 		driveStop();
+		drivePower(20);
+
+		int i = 0;
+		//Drive until black color
+		while ( SensorValue[S1] != black )
+		{
+			//Need to save colors into an array when its specific 1/4 (RGBY)
+			if(SensorValue[S1] == Red ||SensorValue[S1] == Blue ||SensorValue[S1] == Green ||SensorValue[S1] == Yellow )
+			{
+				inputAns[i]	== SensorValue[S1].color;
+				i++;
+			}
+
+		}
+		driveStop();
+
+		for (int count = 0; count < questionNum ; count++ )
+		{
+			if(inputAns[count][0] == answers[count)
+			{
+				score++;
+			}
+		}
+		
+
 		float grade=float(score)/questionNum;
 		
 		displayString (5, “You scored %d/%d, score, questionNum);
 			displayString( (6, “%f”, grade)
 			if (grade<60) 
 			{
-				fireBullet(); // need to create this function
+				playSoundFile("Boo.rsf");
+				//fireBullet(); // need to create this function
 			}
 	}
 return;
