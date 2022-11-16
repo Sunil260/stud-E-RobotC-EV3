@@ -8,6 +8,10 @@ ALSO MAKE SURE TO SWITCH ALL SENSOR PORTS TO MATCH OUR ROBOT
 
 
 
+// main function .....
+#include “PC_FileIO.c”
+
+
 // function to configure all sensors
 void configureAllSensors () 
 {
@@ -275,8 +279,8 @@ void testMode()
 
 // file for answers
 	TFileHandle fileIn;
-	bool fileOkay = openReadPC(fileIn, “answers.txt”);
-	if (!fileOkay) 
+	bool fileCondition = openReadPC(fileIn, “answers.txt”);
+	if (!fileCondition) 
 	{
 		displayString(5,”Error!”);
 		wait1Msec(5000);
@@ -293,9 +297,11 @@ void testMode()
 		{
 			j++
 		}
+
 		//drive and scan
 		driveStop();
 		float grade=float(score)/questionNum;
+		
 		displayString (5, “You scored %d/%d, score, questionNum);
 			displayString( (6, “%f”, grade)
 			if (grade<60) 
@@ -306,9 +312,6 @@ void testMode()
 return;
 }
 
-
-// main function .....
-#include “PC_FileIO.c”
 
 task main ()
 {
