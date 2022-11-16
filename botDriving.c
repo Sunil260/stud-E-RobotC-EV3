@@ -250,7 +250,7 @@ void fireBullet()
 
 }
 
-float timer() 
+void timer() 
 {
 	displayString (5,"Press up to begin the timer");
 	displayString (7,"Press up again to stop it");
@@ -276,6 +276,11 @@ float timer()
 	minutes = minutes % 60;
 	displayString (5, "Your time is %d hours, %d minutes, %d seconds", hours, minutes, seconds);
 	wait1Msec(5000);
+}
+
+float calculateScore (int writtenAnswer, int trueAnswer) 
+{
+	return writtenAnswer/trueAnswer;
 }
 
 // test mode function
