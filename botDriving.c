@@ -51,15 +51,16 @@ void driveStop() {
 }
 
 // turn clockwise function
-void turnCW(int angle, int motorPower) {
-	resetGyro(S1);
-motor[motorA] = -motorPower;
-motor[motorD] = motorPower;
-while(SensorValue[S1] < angle)
-{ }
-driveStop();
-wait1Msec(2000);
-return;	
+void turnCW(int angle, int motorPower)
+{
+	resetGyro(S2);
+	motor[motorA] = motorPower;
+	motor[motorD] = -motorPower;
+	while(abs(SensorValue[S2]) < abs(angle))
+	{ }
+	driveStop();
+	wait1Msec(2000);
+	return;
 }
 
 // function to choose the mode
