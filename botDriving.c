@@ -251,7 +251,7 @@ void studyMode (int tapeColour, int turnColour, int &lapCount)
 }
 
 
-float timer() 
+void timer() 
 {
 	displayString (5,"Press up to begin the timer");
 	displayString (7,"Press up again to stop it");
@@ -268,9 +268,20 @@ float timer()
     while(getButtonPress(UP_BUTTON)) 
 	{
 	}
+	int totalSeconds = time1[T1]/1000.0;
+	int seconds = 0, minutes = 0, hours = 0;
 	eraseDisplay();
-	displayString (5, "Your time is %f minutes", time1[T1]/1000.0/60);
+	minutes = totalSeconds / 60;
+	seconds = totalSeconds % 60;
+	hours = minutes / 60;
+	minutes = minutes % 60;
+	displayString (5, "Your time is %d hours, %d minutes, %d seconds", hours, minutes, seconds);
 	wait1Msec(5000);
+}
+
+float calculateScore (int writtenAnswer, int trueAnswer) 
+{
+	return writtenAnswer/trueAnswer;
 }
 
 // test mode function
@@ -295,7 +306,7 @@ void testMode()
 	else 
 	{
 		int questionNum=10;
-		int score = 0;
+		int correctAnswers = 0;
 		//readCharPC (fileIn,questionNum);
 		// putting answers into an array
 		char answers[questionNum]={''};
@@ -327,12 +338,12 @@ void testMode()
 		{
 			if(inputAns[count][0] == answers[count)
 			{
-				score++;
+				correctAnswers++;
 			}
 		}
 		
 
-		float grade=float(score)/questionNum;
+		float grade=calculateScore(correctAnswers,questionNum);
 		
 		displayString (5, “You scored %d/%d, score, questionNum);
 			displayString( (6, “%f”, grade)
