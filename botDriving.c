@@ -305,7 +305,7 @@ void testMode()
 	else 
 	{
 		int questionNum=10;
-		int score = 0;
+		int correctAnswers = 0;
 		//readCharPC (fileIn,questionNum);
 		// putting answers into an array
 		char answers[questionNum]={''};
@@ -337,12 +337,12 @@ void testMode()
 		{
 			if(inputAns[count][0] == answers[count)
 			{
-				score++;
+				correctAnswers++;
 			}
 		}
 		
 
-		float grade=float(score)/questionNum;
+		float grade=calculateScore(correctAnswers,questionNum);
 		
 		displayString (5, “You scored %d/%d, score, questionNum);
 			displayString( (6, “%f”, grade)
