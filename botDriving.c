@@ -267,8 +267,14 @@ float timer()
     while(getButtonPress(UP_BUTTON)) 
 	{
 	}
+	int totalSeconds = time1[T1]/1000.0;
+	int seconds = 0, minutes = 0, hours = 0;
 	eraseDisplay();
-	displayString (5, "Your time is %f minutes", time1[T1]/1000.0/60);
+	minutes = totalSeconds / 60;
+	seconds = totalSeconds % 60;
+	hours = minutes / 60;
+	minutes = minutes % 60;
+	displayString (5, "Your time is %d hours, %d minutes, %d seconds", hours, minutes, seconds);
 	wait1Msec(5000);
 }
 
