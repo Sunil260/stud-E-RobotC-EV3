@@ -159,7 +159,7 @@ int skittleSelect(){
 
 void open_flap(int time_open)
 {
-		nMotorEncoder(motorB) = 0;
+	nMotorEncoder(motorB) = 0;
 	motor[motorB] = -100;
 	while (nMotorEncoder(motorB) > -1500)
 	{}
@@ -167,19 +167,19 @@ void open_flap(int time_open)
 	time1[T1]=0;
 	int shake_degree = nMotorEncoder(motorC);
 	while(time1[T1] <=time_open)
-  {
+  	{
 
-  	motor[motorC] = 25;
-  	while (nMotorEncoder(motorC) < (shake_degree +10) && time1[T1] <=time_open)
+		motor[motorC] = 25;
+		while (nMotorEncoder(motorC) < (shake_degree +10) && time1[T1] <=time_open)
 		{}
 		motor[motorC]= -25;
 		while (nMotorEncoder(motorC) > (shake_degree-10) && time1[T1] <=time_open)
 		{}
-  }
-  motor[motorC]= -15;
+  	}
+  	motor[motorC]= -15;
 	while (nMotorEncoder(motorC) > (shake_degree-10) && time1[T1] <=time_open)
 	{}
-  motor[motorC]=0;
+  	motor[motorC]=0;
 	motor[motorB] = 100;
 	while (nMotorEncoder(motorB) < 0)
 	{}
@@ -189,10 +189,11 @@ void open_flap(int time_open)
 
 void dispense()
 {
-		const int TIME_OPEN_FLAP_M = 2000;
+	const int TIME_OPEN_FLAP_M = 2000;
 	int degree_deviation = -2;
-	const TIME_OPEN_FLAP_M = 2000;
+	//const TIME_OPEN_FLAP_M = 2000;
 	bool dispensing = true;
+	
 	while(dispensing == true)
 	{
 		int skittle_selected = skittleSelect();
@@ -200,17 +201,21 @@ void dispense()
 		nMotorEncoder(motorC) = 0;
 		motor[motorC]= -15;
 		while(nMotorEncoder(motorC) >  rotate)
-	  {}
+		{
+
+		}
 		motor[motorC]=0;
 		open_flap(TIME_OPEN_FLAP_M);
 		motor[motorC]= 15;
 		while(nMotorEncoder(motorC) <(0 + degree_deviation))
-	  {}
+		{
+
+		}
 		motor[motorC]=0;
 		
 	}
-	}
 }
+
 
 
 // study mode
@@ -245,10 +250,6 @@ void studyMode (int tapeColour, int turnColour, int &lapCount)
 	return;
 }
 
-void fireBullet() 
-{
-
-}
 
 float timer() 
 {
