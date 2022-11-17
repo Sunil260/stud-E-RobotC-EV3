@@ -73,11 +73,11 @@ int modeChoose() {
 	int mode=0;
 	while(!(mode==1||mode==2)) 
 	{
-		displayString (5, "Choose your mode:");
-		displayString (7, "Press LEFT button for:");
-		displayString (8, "Study Mode");
-		displayString (10, "Press RIGHT button for:");
-		displayString (11, "Test Mode");
+		displayCenteredBigTextLine (2, "Mode Menu");
+		displayBigTextLine (5, "Press LEFT button:");
+		displayBigTextLine (7, "Study Mode");
+		displayBigTextLine (10, "Press RIGHT button:");
+		displayBigTextLine (12, "Test Mode");
 // study mode=1, test mode=2
 		if (getButtonPress(LEFT_BUTTON)) 
 			{
@@ -250,36 +250,56 @@ void studyMode (int tapeColour, int turnColour, int &lapCount)
 	return;
 }
 
+void hourglassVisual() {
+	time1[T1] = 0;
+	drawBmpfile(0,127,"Hourglass 0");
+	while(time1[T1] <= 2000 && (!getButtonPress(UP_BUTTON)))
+	{}
+	drawBmpfile(0,127,"Hourglass 1");
+	while(time1[T1] <= 4000 && (!getButtonPress(UP_BUTTON)))
+  {}
+	drawBmpfile(0,127,"Hourglass 2");
+	while(time1[T1] <= 4800 && (!getButtonPress(UP_BUTTON)))
+	{}
+}
 
 void timer() 
 {
-	displayString (5,"Press up to begin the timer");
-	displayString (7,"Press up again to stop it");
+	displayCenteredBigTextLine(3,"Press up to");
+	displayCenteredBigTextLine(6,"begin the timer");
+	displayCenteredBigTextLine(9,"and");
+	displayCenteredBigTextLine(12,"end the timer");
+
 	while(!getButtonPress(UP_BUTTON)) 
 	{
 	}
     while(getButtonPress(UP_BUTTON)) 
 	{
 	}
-	time1[T1]=0;
+	time1[T2]=0;
 	eraseDisplay();
-	drawBmpFile("Hourglass 0.bmp")
 	while(!getButtonPress(UP_BUTTON)) 
 	{
+		hourglassVisual();
+	
 	}
     while(getButtonPress(UP_BUTTON)) 
 	{
 	}
-	int totalSeconds = time1[T1]/1000.0;
-	int seconds = 0, minutes = 0, hours = 0;
+	int totalSeconds = time1[T2]/1000.0;
+	int testSeconds = 0, testMinutes = 0, testHours = 0;
 	eraseDisplay();
-	minutes = totalSeconds / 60;
-	seconds = totalSeconds % 60;
-	hours = minutes / 60;
-	minutes = minutes % 60;
-	displayString (5, "Your time is %d hours, %d minutes, %d seconds", hours, minutes, seconds);
+	testMinutes = totalSeconds / 60;
+	testSeconds = totalSeconds % 60;
+	testHours = testMinutes / 60;
+	testMinutes = testMinutes % 60;
+	displayCenteredBigTextLine(2,"Your time is:");
+	displayBigTextLine (6, "%d hours", testHours);
+	displayBigTextLine (9, "%d minutes", testMinutes);
+	displayBigTextLine (12, "%d seconds", testSeconds);
 	wait1Msec(5000);
 }
+
 
 float calculateScore (int writtenAnswer, int trueAnswer) 
 {
