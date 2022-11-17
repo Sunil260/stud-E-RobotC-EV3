@@ -74,9 +74,9 @@ int modeChoose() {
 	while(!(mode==1||mode==2)) 
 	{
 		displayCenteredBigTextLine (2, "Mode Menu");
-		displayBigTextLine (5, "Press LEFT button:");
+		displayBigTextLine (5, "Press LEFT for");
 		displayBigTextLine (7, "Study Mode");
-		displayBigTextLine (10, "Press RIGHT button:");
+		displayBigTextLine (10, "Press RIGHT for");
 		displayBigTextLine (12, "Test Mode");
 // study mode=1, test mode=2
 		if (getButtonPress(LEFT_BUTTON)) 
