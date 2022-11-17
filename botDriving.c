@@ -262,6 +262,8 @@ void timer()
 	{
 	}
 	time1[T1]=0;
+	eraseDisplay();
+	drawBmpFile("Hourglass 0.bmp")
 	while(!getButtonPress(UP_BUTTON)) 
 	{
 	}
