@@ -254,13 +254,16 @@ void hourglassVisual() {
 	time1[T1] = 0;
 	drawBmpfile(0,127,"Hourglass 0");
 	while(time1[T1] <= 2000 && (!getButtonPress(UP_BUTTON)))
-	{}
+	{
+	}
 	drawBmpfile(0,127,"Hourglass 1");
 	while(time1[T1] <= 4000 && (!getButtonPress(UP_BUTTON)))
-  {}
+ 	{
+	}
 	drawBmpfile(0,127,"Hourglass 2");
 	while(time1[T1] <= 4800 && (!getButtonPress(UP_BUTTON)))
-	{}
+	{
+	}
 }
 
 void timer() 
