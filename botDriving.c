@@ -145,12 +145,13 @@ int skittleSelect(){
 	  	{}
 	  }
 	  change_select(choice, Yellow_char, Red_char, Green_char, Purple_char, Orange_char);
-		displayString(4,"%s Yellow Skittle", Yellow_char);
-		displayString(5,"%s Red Skittle", Red_char);
-		displayString(6,"%s Green Skittle", Green_char);
-		displayString(7,"%s Purple Skittle", Purple_char);
-		displayString(8,"%s Orange Skittle", Orange_char);
-		displayString(9,"%d",choice);
+		displayCenteredBigTextLine(2, "Skittle Menu");
+		displayBigTextLine(5,"%s Yellow", Yellow_char);
+		displayBigTextLine(7,"%s Red", Red_char);
+		displayBigTextLine(9,"%s Green", Green_char);
+		displayBigTextLine(11,"%s Purple", Purple_char);
+		displayBigTextLine(13,"%s Orange", Orange_char);
+		displayBigTextLine(15,"%d",choice);
 		
   }
   return choice;
