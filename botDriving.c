@@ -6,12 +6,11 @@ Test mode stuff
 ALSO MAKE SURE TO SWITCH ALL SENSOR PORTS TO MATCH OUR ROBOT
 */
 
-
-
 const string GYRO_PORT = "S1";
 const string COLOR_PORT = "S2";
 const string ULTRASONIC_PORT = "S3";
 const string TOUCH_PORT = "S4";
+
 // main function .....
 #include “PC_FileIO.c”
 
@@ -236,7 +235,9 @@ void studyMode (int tapeColour, int turnColour, int &lapCount)
 		}
 		while (!(SensorValue[COLOR_PORT]==tapeColour||SensorValue[COLOR_PORT]==turnColour)) {
 			motor[motorA]=motor[motorD]=0;
+			displayCenteredBigTextLine(5,"Put back on path");
 			playSoundFile("Uh-oh.rsf");
+			wait1Msec(10000);
 		}
 		driveStop();
 		turnCW(90,20);
@@ -370,7 +371,6 @@ void testMode()
 			if (grade<60) 
 			{
 				playSoundFile("Boo.rsf");
-				//fireBullet(); // need to create this function
 			}
 	}
 return;
@@ -387,14 +387,12 @@ task main ()
 	int lapCount= 0;
 	while (done!=0)
 	{
-		bool modeInterface=true;
-		while (modeInterface==true)
+		while (!(mode==1||mode==2))
 		{
 			mode = modeChoose();
-			modeInterface=false;
 		}
 
-		while (mode == 1)
+		if (mode == 1)
 			{
 
 			studyMode((int)colorGreen, (int)colorBlack, lapCount);
@@ -403,7 +401,7 @@ task main ()
 			}
 		}
 
-		while (mode==2)
+		else if (mode==2)
 		{
 			testMode();
 			done=0;
