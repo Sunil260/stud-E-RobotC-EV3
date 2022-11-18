@@ -8,16 +8,13 @@ ALSO MAKE SURE TO SWITCH ALL SENSOR PORTS TO MATCH OUR ROBOT
 
 
 
-<<<<<<< HEAD
 const string GYRO_PORT = "S1";
 const string COLOR_PORT = "S2";
 const string ULTRASONIC_PORT = "S3";
 const string TOUCH_PORT = "S4";
-=======
 // main function .....
 #include “PC_FileIO.c”
 
->>>>>>> 17589b00fc646326dca2a03441773fe63ed97a0e
 
 // function to configure all sensors
 void configureAllSensors ()
@@ -63,24 +60,11 @@ void driveStop() {
 }
 
 // turn clockwise function
-<<<<<<< HEAD
 void turnCW(int angle, int motorPower) {
 	resetGyro(0);
 	motor[motorA] = motorPower;
 	motor[motorD] = motorPower;
 	while(SensorValue[GYRO_PORT] < angle)
-=======
-void turnCW(int angle, int motorPower)
-{
-	resetGyro(S2);
-	motor[motorA] = motorPower;
-	motor[motorD] = -motorPower;
-	while(abs(SensorValue[S2]) < abs(angle))
->>>>>>> 17589b00fc646326dca2a03441773fe63ed97a0e
-	{ }
-	driveStop();
-	wait1Msec(2000);
-	return;
 }
 
 // function to choose the mode
@@ -109,11 +93,6 @@ int modeChoose() {
 	return mode;
 }
 
-<<<<<<< HEAD
-// dispense function someone make the menu
-void dispense () {
-
-=======
 //resets the variables for the skittle menu
 void reset_char(string & var1, string & var2, string & var3, string & var4, string & var5)
 {
@@ -207,7 +186,6 @@ void open_flap(int time_open)
 	{}
 	motor[motorB] = 0;
 	
->>>>>>> 17589b00fc646326dca2a03441773fe63ed97a0e
 }
 
 void dispense()
@@ -246,7 +224,6 @@ void studyMode (int tapeColour, int turnColour, int &lapCount)
 {
 	for (int count=0; count<4; count++)
 	{
-<<<<<<< HEAD
 		drivePower(10);
 		while (SensorValue[COLOR_PORT] == tapeColour)
 		{
@@ -254,6 +231,7 @@ void studyMode (int tapeColour, int turnColour, int &lapCount)
 			{
 				driveStop();
 				dispense();
+				lapCount=0;
 			}
 		}
 		while (!(SensorValue[COLOR_PORT]==tapeColour||SensorValue[COLOR_PORT]==turnColour)) {
@@ -263,48 +241,11 @@ void studyMode (int tapeColour, int turnColour, int &lapCount)
 		driveStop();
 		turnCW(90,20);
 		wait1Msec(2000);
-=======
-		drivePower(5);
-		if (SensorValue[touchPort]==0) 
-		{
-			driveStop();
-			dispense();
-			lapCount=0;
-		}
-		drivePower(20);
-		while(SensorValue[S1] == tapeColour && SensorValue[S1] != turnColour)
-		{
-			playSoundFile("fixSound.rsf");
-		}
-		driveStop();
-		wait1Msec(1000);
-		driveStop(); 
-		turnCW(90,5);
-		nMotorEncoder[motorA] = 0; 
-		drivePower(5); 
-		while(nMotorEncoder[motorA] < CORNER_DIST_CORRECTION)
-		{
-		}
-		driveStop();
->>>>>>> 17589b00fc646326dca2a03441773fe63ed97a0e
 	}
 	lapCount++;
 	return;
 }
 
-<<<<<<< HEAD
-
-void fireBullet()
-{
-
-}
-
-float timer()
-{
-	displayString (5,"Press Up to Begin the Timer");
-	displayString (7,"Press Up Again to Stop the Timer");
-	while(!getButtonPress(UP_BUTTON))
-=======
 void hourglassVisual() {
 	time1[T1] = 0;
 	drawBmpfile(0,127,"Hourglass 0");
@@ -329,7 +270,6 @@ void timer()
 	displayCenteredBigTextLine(12,"end the timer");
 
 	while(!getButtonPress(UP_BUTTON)) 
->>>>>>> 17589b00fc646326dca2a03441773fe63ed97a0e
 	{
 	}
     while(getButtonPress(UP_BUTTON))
@@ -337,15 +277,9 @@ void timer()
 	}
 	time1[T2]=0;
 	eraseDisplay();
-<<<<<<< HEAD
-	time1[T1]=0;
-	while(!getButtonPress(UP_BUTTON))
-=======
 	while(!getButtonPress(UP_BUTTON)) 
->>>>>>> 17589b00fc646326dca2a03441773fe63ed97a0e
 	{
 		hourglassVisual();
-	
 	}
     while(getButtonPress(UP_BUTTON))
 	{
@@ -371,24 +305,13 @@ float calculateScore (int writtenAnswer, int trueAnswer)
 }
 
 // test mode function
-<<<<<<< HEAD
-void testMode()
-{
-// timer
-timer();
-=======
 void testMode() 
 { 
 	// timer
 	timer();
->>>>>>> 17589b00fc646326dca2a03441773fe63ed97a0e
 
 	// file for answers
 	TFileHandle fileIn;
-<<<<<<< HEAD
-	bool fileOkay = openReadPC(fileIn, "answers.txt");
-	if (!fileOkay)
-=======
 	bool fileCondition = openReadPC(fileIn, “answers.txt”);
 
 	//Array for collected answer
@@ -396,7 +319,6 @@ void testMode()
 
 	//Checks if file can open 
 	if (!fileCondition) 
->>>>>>> 17589b00fc646326dca2a03441773fe63ed97a0e
 	{
 		displayString(5,"Error!");
 		wait1Msec(5000);
@@ -416,12 +338,6 @@ void testMode()
 
 		//drive and scan
 		driveStop();
-<<<<<<< HEAD
-		float grade=float(score)/questionNum;
-		displayString (5, �??You scored %d/%d, score, questionNum);
-			displayString( (6, �??%f�?�, grade)
-			if (grade<60)
-=======
 		drivePower(20);
 
 		int i = 0;
@@ -452,7 +368,6 @@ void testMode()
 		displayString (5, “You scored %d/%d, score, questionNum);
 			displayString( (6, “%f”, grade)
 			if (grade<60) 
->>>>>>> 17589b00fc646326dca2a03441773fe63ed97a0e
 			{
 				playSoundFile("Boo.rsf");
 				//fireBullet(); // need to create this function
@@ -462,13 +377,6 @@ return;
 }
 
 
-<<<<<<< HEAD
-// main function .....
-#include "PC_FileIO.c"
-*/
-
-=======
->>>>>>> 17589b00fc646326dca2a03441773fe63ed97a0e
 task main ()
 {
 	configureAllSensors();
@@ -498,23 +406,7 @@ task main ()
 		while (mode==2)
 		{
 			testMode();
-<<<<<<< HEAD
-			time1[T2]=0;
-			if ((time1[T2]/1000)>120)
-			{
-				done=0;
-			}
-		}
-
-
-		// press enter button to go back to the menu this defo doesnt work like i want it so that at any point if u ress it it goes back to the
-		// main menu
-		if(getButtonPress(ENTER_BUTTON) == true)
-		{
-			modeInterface=true;
-=======
 			done=0;
->>>>>>> 17589b00fc646326dca2a03441773fe63ed97a0e
 		}
 	}
 	return;
