@@ -57,12 +57,15 @@ void driveStop()
 }
 
 // turn clockwise function
-void turnCW(int angle, int motorPower) 
-{
-	resetGyro(0);
-	motor[motorA] = motorPower;
-	motor[motorD] = motorPower;
-	while(SensorValue[GYRO_PORT] < angle)
+void turnCW(int angle, int motorPower) {
+    resetGyro(S2);
+	motor[motorA] = -motorPower;
+	motor[motorD] = -motorPower;
+	while(SensorValue[S2] < angle)
+	{ }
+	driveStop();
+	wait1Msec(2000);
+	return;
 }
 
 // function to choose the mode
@@ -224,33 +227,42 @@ void dispense()
 	}
 }
 
-// study mode
-void studyMode (int tapeColour, int turnColour, int &lapCount)
+// study mode IT WORKS!!
+void studyMode (int tapeColour, int turnColour)
 {
-	for (int count=0; count<4; count++)
-	{
-		drivePower(10);
-		while (SensorValue[COLOR_PORT] == tapeColour)
-		{
-			if (SensorValue[TOUCH_PORT] == 0)
+  int studyLoop=0;
+    while (studyLoop<=2) 
+    {
+        for (int j=0;j<=4;j++)
+        {
+            drivePower(20);
+            while (SensorValue(S1)==tapeColour||SensorValue(S1)==1)
+            {
+                if (SensorValue(S3)==1)
+                {
+                    driveStop();
+                    dispense()
+                    drivePower(20);
+                    studyLoop=0;
+                }
+            }
+            if (SensorValue(S1)==turnColour)
+            {
+                driveStop();
+                turnCW(87,20);
+                drivePower(20);
+                wait1Msec(1000);
+            }
+            else 
 			{
-				driveStop();
-				dispense();
-				lapCount=0;
-			}
-		}
-		while (!(SensorValue[COLOR_PORT]==tapeColour||SensorValue[COLOR_PORT]==turnColour)) {
-			motor[motorA]=motor[motorD]=0;
-			displayCenteredBigTextLine(5,"Put back on path");
-			playSoundFile("Uh-oh.rsf");
-			wait1Msec(10000);
-		}
-		driveStop();
-		turnCW(90,20);
-		wait1Msec(2000);
-	}
-	lapCount++;
-	return;
+                driveStop();
+                setSoundVolume(100);
+                playSoundFile("Uh-oh.rsf");
+                wait1Msec(1000);
+            }
+        }
+        studyLoop++;
+    }
 }
 
 // hourglass spinning
@@ -406,14 +418,12 @@ void testMode()
 	}
 }
 
-
 task main ()
 {
 	configureAllSensors();
 
 	int done=1;
 	int mode = -1;
-	int lapCount= 0;
 
 	while (done!=0)
 	{
@@ -424,10 +434,7 @@ task main ()
 
 		if (mode == 1)
 		{
-			while (lapcount<2) 
-			{
-				studyMode((int)colorGreen, (int)colorBlack, lapCount);
-			}
+			studyMode((int)colorGreen, (int)colorWhite);
 			done=0;
 		}
 
