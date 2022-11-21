@@ -227,38 +227,40 @@ void dispense()
 	}
 }
 
-// study mode IT WORKS!!
+// study mode IT WORKS but fix something!!
 void studyMode (int tapeColour, int turnColour)
 {
-  int studyLoop=0;
-    while (studyLoop<=2) 
+  int studyLoop=0; // # of loops it has done
+    while (studyLoop<=2) // if loops>2, then it exits the function
     {
-        for (int j=0;j<=4;j++)
+        for (int turnCount=0;turnCount<=4;turnCount++) // 4 turns in one loop
         {
             drivePower(20);
-            while (SensorValue(S1)==tapeColour||SensorValue(S1)==1)
+            while (SensorValue(COLOR_PORT)==tapeColour||SensorValue(COLOR_PORT)==1) // while it senses the tape colour or black because of colour variation
             {
-                if (SensorValue(S3)==1)
+                if (SensorValue(TOUCH_PORT)==1) // if the touch button is pushed
                 {
-                    driveStop();
-                    dispense()
-                    drivePower(20);
-                    studyLoop=0;
+                    driveStop(); // stop 
+                    dispense() // dispense a skittle of choosing
+                    drivePower(20); // continue driving
+                    studyLoop=0; // set loop count back to 0
                 }
             }
-            if (SensorValue(S1)==turnColour)
+            if (SensorValue(COLOR_PORT)==turnColour) // turns at the corners
             {
-                driveStop();
-                turnCW(87,20);
-                drivePower(20);
+                driveStop(); // stops
+                turnCW(87,20); // turns at 87 because 90 over rotates the bot
+                drivePower(20); // drive forward a bit so it doesnt sense white anymore
                 wait1Msec(1000);
             }
-            else 
+            else // if it sees an unrelated colour, fix this cuz if it senses this it adds to turn loop
 			{
-                driveStop();
+                driveStop(); // stop
                 setSoundVolume(100);
-                playSoundFile("Uh-oh.rsf");
-                wait1Msec(1000);
+                playSoundFile("Uh-oh.rsf"); // play uh oh sound
+                while (!(SensorValue(COLOR_PORT)==tapeColour||SensorValue(COLOR_PORT)==1)) // wait until it gets placed back on track
+				{
+				}
             }
         }
         studyLoop++;
@@ -270,17 +272,17 @@ void hourglassVisual()
 {
 	time1[T1] = 0;
 
-	drawBmpfile(0,127,"Hourglass 0");
+	drawBmpfile(0,127,"Hourglass 0"); // top full
 	while(time1[T1] <= 2000 && (!getButtonPress(UP_BUTTON)))
 	{
 	}
 
-	drawBmpfile(0,127,"Hourglass 1");
+	drawBmpfile(0,127,"Hourglass 1"); // bottom full
 	while(time1[T1] <= 4000 && (!getButtonPress(UP_BUTTON)))
  	{
 	}
 
-	drawBmpfile(0,127,"Hourglass 2");
+	drawBmpfile(0,127,"Hourglass 2"); // turn
 	while(time1[T1] <= 4800 && (!getButtonPress(UP_BUTTON)))
 	{
 	}
