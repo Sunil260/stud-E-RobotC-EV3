@@ -346,17 +346,15 @@ void testMode()
 
 	// file for answers
 	TFileHandle fileIn;
-	bool fileCondition = openReadPC(fileIn, “answers.txt”);
-
-	//Array for collected answer
-	string inputAns [QUESTIONS_NUM-1] = {""};
-
-	//Checks if file can open 
-	if (!fileCondition) 
+	bool fileCondition = openReadPC(fileIn, "answers.txt");
+	if (!fileCondition)
 	{
 		displayString(5,"Error!");
 		wait1Msec(5000);
 	}
+	//Array for collected answer
+	string inputAns [QUESTIONS_NUM-1] = {""};
+
 	else
 	{
 		//readCharPC (fileIn,questionNum);
