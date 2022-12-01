@@ -1,8 +1,8 @@
 // global constants for ports
-const string GYRO_PORT = "S1";
-const string COLOR_PORT = "S2";
-const string ULTRASONIC_PORT = "S3";
-const string TOUCH_PORT = "S4";
+const string COLOR_PORT = "S1";
+const string GYRO_PORT = "S2";
+const string TOUCH_PORT = "S3";
+const string ULTRASONIC_PORT = "S4";
 
 //constant for array
 const QUESTIONS_NUM = 10;
