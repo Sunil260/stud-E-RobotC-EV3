@@ -160,7 +160,7 @@ int skittleSelect()
 		displayBigTextLine(9,"%s Green", Green_char);
 		displayBigTextLine(11,"%s Purple", Purple_char);
 		displayBigTextLine(13,"%s Orange", Orange_char);
-		
+		displayBigTextLine(15,"%d",choice);
  	}
   return choice;
 }
@@ -199,45 +199,12 @@ void open_flap(int time_open)
 	}
 	motor[motorB] = 0;
 }
-// asks user if they want to keep selecting skittles 
-bool keepdispencing();
-{
-
-	eraseDisplay();
-	displayBigTextLine(2,"Need More?")
-	displayBigTextLine(4,"Press Up For Yes ");
-	displayBigTextLine(6,"Press Down For No");
-
-	while(true)
-	{
-		if (getButtonPress(UP_BUTTON))
-		{
-			while(getButtonPress(UP_BUTTON))
-			{
-				
-			}
-			return true;
-
-		}
-		if (getButtonPress(DOWN_BUTTON))
-		{
-			while(getButtonPress(DOWN_BUTTON))
-			{
-
-			}
-			return false;
-			
-		}
-	}
-	
-
-}
 
 // dispensing fucntion
 void dispense()
 {
 	const int TIME_OPEN_FLAP_M = 2000;
-	int degree_deviation = 0;
+	int degree_deviation = -2;
 	//const TIME_OPEN_FLAP_M = 2000;
 	bool dispensing = true;
 	
@@ -257,8 +224,6 @@ void dispense()
 		{
 		}
 		motor[motorC]=0;
-
-		dispensing = keepdispencing();
 	}
 }
 
@@ -381,15 +346,17 @@ void testMode()
 
 	// file for answers
 	TFileHandle fileIn;
-	bool fileCondition = openReadPC(fileIn, "answers.txt");
-	if (!fileCondition)
+	bool fileCondition = openReadPC(fileIn, “answers.txt”);
+
+	//Array for collected answer
+	string inputAns [QUESTIONS_NUM-1] = {""};
+
+	//Checks if file can open 
+	if (!fileCondition) 
 	{
 		displayString(5,"Error!");
 		wait1Msec(5000);
 	}
-	//Array for collected answer
-	string inputAns [QUESTIONS_NUM-1] = {""};
-
 	else
 	{
 		//readCharPC (fileIn,questionNum);

@@ -1,14 +1,14 @@
 // global constants for ports
-const string GYRO_PORT = "S1";
-const string COLOR_PORT = "S2";
-const string ULTRASONIC_PORT = "S3";
-const string TOUCH_PORT = "S4";
+const string COLOR_PORT = "S1";
+const string GYRO_PORT = "S2";
+const string TOUCH_PORT = "S3";
+const string ULTRASONIC_PORT = "S4";
 
 //constant for array
-const QUESTIONS_NUM = 10;
+const int QUESTIONS_NUM = 10;
 
 // main function .....
-#include “PC_FileIO.c”
+#include "PC_FileIO.c"
 
 // function to configure all sensors
 void configureAllSensors ()
@@ -21,6 +21,8 @@ void configureAllSensors ()
 	wait1Msec(50);
 	SensorType[GYRO_PORT] = sensorEV3_Gyro;
 	wait1Msec(50);
+	SensorMode[COLOR_PORT] = modeEV3Color_Calibration;
+   wait1Msec(50);
 	SensorMode[COLOR_PORT] = modeEV3Color_Color;
 	wait1Msec(50);
 	SensorMode[GYRO_PORT] = modeEV3Gyro_Calibration;
@@ -31,7 +33,7 @@ void configureAllSensors ()
 }
 
 // drive function
-void drivePower(int motorPower) 
+void drivePower(int motorPower)
 {
 	motor[motorA] = motorPower;
 	motor[motorD] = -motorPower;
@@ -39,7 +41,7 @@ void drivePower(int motorPower)
 }
 
 // drive a certain distance in cm function
-void driveDist(float distCM, int motorPow) 
+/*void driveDist(float distCM, int motorPow)
 {
 	const int encoderLimit=distCM*180/(PI*2.75);
 	nMotorEncoder[motorB]=0;
@@ -48,9 +50,10 @@ void driveDist(float distCM, int motorPow)
 	{ }
 	motor[motorB]=motor[motorC]=0;
 }
+*/
 
 // stop driving function
-void driveStop() 
+void driveStop()
 {
 	motor[motorA]=motor[motorD]=0;
 	return;
@@ -69,7 +72,7 @@ void turnCW(int angle, int motorPower) {
 }
 
 // function to choose the mode
-int modeChoose() 
+int modeChoose()
 {
 	int mode = 0;
 	// input verification
@@ -124,18 +127,18 @@ void change_select(int & choice, string & Yellow_char, string & Red_char, string
   		reset_char(Purple_char, Orange_char, Yellow_char,Red_char,Green_char);
 	else if (choice == 4)
   		reset_char(Orange_char, Yellow_char,Red_char,Green_char,Purple_char);
-} 
+}
 
 //menu for selecting the skittles
 int skittleSelect()
 {
-	int choice = 0; 
+	int choice = 0;
 	string Yellow_char = " ";
 	string Red_char= " ";
 	string Green_char = " ";
 	string Purple_char = " " ;
 	string Orange_char = " ";
-	
+
 	while(!getButtonPress(ENTER_BUTTON))
 	{
 		if (getButtonPress(DOWN_BUTTON))
@@ -145,7 +148,7 @@ int skittleSelect()
 		  	{
 			}
 		}
-		
+
 		if(getButtonPress(UP_BUTTON))
 	  	{
 			choice--;
@@ -160,7 +163,7 @@ int skittleSelect()
 		displayBigTextLine(9,"%s Green", Green_char);
 		displayBigTextLine(11,"%s Purple", Purple_char);
 		displayBigTextLine(13,"%s Orange", Orange_char);
-		
+
  	}
   return choice;
 }
@@ -199,14 +202,14 @@ void open_flap(int time_open)
 	}
 	motor[motorB] = 0;
 }
-// asks user if they want to keep selecting skittles 
-bool keepdispencing();
+// asks user if they want to keep selecting skittles
+bool keepdispencing()
 {
 
 	eraseDisplay();
-	displayBigTextLine(2,"Need More?")
-	displayBigTextLine(4,"Press Up For Yes ");
-	displayBigTextLine(6,"Press Down For No");
+	displayBigTextLine(2,"Need More?");
+	displayBigTextLine(4,"Up For Yes ");
+	displayBigTextLine(6,"Down For No");
 
 	while(true)
 	{
@@ -214,8 +217,9 @@ bool keepdispencing();
 		{
 			while(getButtonPress(UP_BUTTON))
 			{
-				
+
 			}
+			eraseDisplay();
 			return true;
 
 		}
@@ -223,13 +227,13 @@ bool keepdispencing();
 		{
 			while(getButtonPress(DOWN_BUTTON))
 			{
-
 			}
+			eraseDisplay();
 			return false;
-			
+
 		}
 	}
-	
+
 
 }
 
@@ -240,8 +244,8 @@ void dispense()
 	int degree_deviation = 0;
 	//const TIME_OPEN_FLAP_M = 2000;
 	bool dispensing = true;
-	
-	while(dispensing == true)
+	do
+
 	{
 		int skittle_selected = skittleSelect();
 		int rotate = -1*skittle_selected*60;
@@ -258,8 +262,8 @@ void dispense()
 		}
 		motor[motorC]=0;
 
-		dispensing = keepdispencing();
-	}
+
+	}while(keepdispencing());
 }
 
 // study mode IT WORKS but fix something!!
@@ -275,8 +279,8 @@ void studyMode (int tapeColour, int turnColour)
             {
                 if (SensorValue(TOUCH_PORT)==1) // if the touch button is pushed
                 {
-                    driveStop(); // stop 
-                    dispense() // dispense a skittle of choosing
+                    driveStop(); // stop
+                    dispense(); // dispense a skittle of choosing
                     drivePower(20); // continue driving
                     studyLoop=0; // set loop count back to 0
                 }
@@ -303,7 +307,7 @@ void studyMode (int tapeColour, int turnColour)
 }
 
 // hourglass spinning
-void hourglassVisual() 
+void hourglassVisual()
 {
 	time1[T1] = 0;
 
@@ -324,14 +328,14 @@ void hourglassVisual()
 }
 
 // test timer
-void timer() 
+void timer()
 {
 	displayCenteredBigTextLine(3,"Press up to");
 	displayCenteredBigTextLine(6,"begin the timer");
 	displayCenteredBigTextLine(9,"and");
 	displayCenteredBigTextLine(12,"end the timer");
 
-	while(!getButtonPress(UP_BUTTON)) 
+	while(!getButtonPress(UP_BUTTON))
 	{
 	}
     while(getButtonPress(UP_BUTTON))
@@ -341,7 +345,7 @@ void timer()
 	time1[T2]=0;
 	eraseDisplay();
 
-	while(!getButtonPress(UP_BUTTON)) 
+	while(!getButtonPress(UP_BUTTON))
 	{
 		hourglassVisual();
 	}
@@ -367,29 +371,30 @@ void timer()
 }
 
 // calculates test score
-float calculateGrade (int writtenAnswer, int trueAnswer) 
+float calculateGrade (int writtenAnswer, int trueAnswer)
 {
 	int grade=(writtenAnswer/trueAnswer)*100;
 	return grade;
 }
 
 // test mode function
-void testMode() 
-{ 
+void testMode()
+{
 	// timer
 	timer();
 
 	// file for answers
 	TFileHandle fileIn;
+
+	//Array for collected answer
+	string inputAns [QUESTIONS_NUM-1] = {""};
+
 	bool fileCondition = openReadPC(fileIn, "answers.txt");
 	if (!fileCondition)
 	{
 		displayString(5,"Error!");
 		wait1Msec(5000);
 	}
-	//Array for collected answer
-	string inputAns [QUESTIONS_NUM-1] = {""};
-
 	else
 	{
 		//readCharPC (fileIn,questionNum);
@@ -429,23 +434,23 @@ void testMode()
 				correctAnswers++;
 			}
 		}
-		
+
 		float grade = calculateGrade(correctAnswers, QUESTIONS_NUM);
-		
+
 		displayCenteredBigTextLine (5, "You scored %d/%d", correctAnswers, QUESTIONS_NUM);
 		displayCenteredBigTextLine (9, "%f percent", grade);
 
-		if (grade<60) 
+		if (grade<60)
 		{
 			playSoundFile("Boo.rsf");
 			wait1Msec(5000);
 		}
-		else if (grade=>60) 
+		else if (grade=>60)
 		{
 			playSoundFile("Good job.rsf");
 			wait1Msec(5000);
 		}
-		else 
+		else
 		{
 			playSoundFile("Error.rsf");
 			wait1Msec(5000);
@@ -457,15 +462,13 @@ task main ()
 {
 	configureAllSensors();
 
-	int done=1;
+	int done = 1;
 	int mode = -1;
 
 	while (done!=0)
 	{
-		while (!(mode==1||mode==2))
-		{
-			mode = modeChoose();
-		}
+
+		mode = modeChoose();
 
 		if (mode == 1)
 		{
